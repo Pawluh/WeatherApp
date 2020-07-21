@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <Label layoutX="14.0" layoutY="78.0" prefHeight="17.0" prefWidth="89.0" text="Aktualna temp:" />
+      <Label layoutX="14.0" layoutY="95.0" prefHeight="17.0" prefWidth="89.0" text="Max temp:" />
+      <Label layoutX="14.0" layoutY="112.0" prefHeight="17.0" prefWidth="89.0" text="Min temp:" />
+      <Label layoutX="14.0" layoutY="146.0" prefHeight="17.0" prefWidth="89.0" text="Aktualne Dane:" />
+      <Label layoutX="14.0" layoutY="163.0" prefHeight="17.0" prefWidth="89.0" text="Wilgotność:" />
+      <Label layoutX="14.0" layoutY="180.0" prefHeight="17.0" prefWidth="89.0" text="Ciśnienie:" />
+      <Label layoutX="14.0" layoutY="197.0" text="Szansa na opady:" />
+      <Label layoutX="14.0" layoutY="214.0" prefHeight="17.0" prefWidth="89.0" text="Wiatr:" />
+      <Label fx:id="humidity1" layoutX="119.0" layoutY="163.0" text="Label" />
+      <Label fx:id="pressure1" layoutX="119.0" layoutY="180.0" text="Label" />
+      <Label fx:id="rain1" layoutX="119.0" layoutY="197.0" text="Label" />
+      <Label fx:id="wind1" layoutX="119.0" layoutY="214.0" text="Label" />
+      <Label layoutX="16.0" layoutY="48.0" prefHeight="17.0" prefWidth="89.0" text="DATA" />
+      <TextField fx:id="city1TextField" layoutX="14.0" layoutY="14.0" promptText="Podaj nazwe miasta" />
+      <Button layoutX="169.0" layoutY="14.0" mnemonicParsing="false" onAction="#findCity1Button" text="Button" />
+      <Label layoutX="366.0" layoutY="85.0" prefHeight="17.0" prefWidth="89.0" text="Aktualna temp:" />
+      <Label layoutX="366.0" layoutY="102.0" prefHeight="17.0" prefWidth="89.0" text="Max temp:" />
+      <Label layoutX="366.0" layoutY="119.0" prefHeight="17.0" prefWidth="89.0" text="Min temp:" />
+      <Label layoutX="366.0" layoutY="153.0" prefHeight="17.0" prefWidth="89.0" text="Aktualne Dane:" />
+      <Label layoutX="366.0" layoutY="170.0" prefHeight="17.0" prefWidth="89.0" text="Wilgotność:" />
+      <Label layoutX="366.0" layoutY="187.0" prefHeight="17.0" prefWidth="89.0" text="Ciśnienie:" />
+      <Label layoutX="366.0" layoutY="204.0" text="Szansa na opady:" />
+      <Label layoutX="366.0" layoutY="221.0" prefHeight="17.0" prefWidth="89.0" text="Wiatr:" />
+      <Label fx:id="humidity2" layoutX="471.0" layoutY="170.0" text="Label" />
+      <Label fx:id="pressure2" layoutX="471.0" layoutY="187.0" text="Label" />
+      <Label fx:id="rain2" layoutX="471.0" layoutY="204.0" text="Label" />
+      <Label fx:id="wind2" layoutX="471.0" layoutY="221.0" text="Label" />
+      <Label layoutX="368.0" layoutY="55.0" prefHeight="17.0" prefWidth="89.0" text="DATA" />
+      <TextField fx:id="city2TextField" layoutX="366.0" layoutY="21.0" promptText="Podaj nazwe miasta" />
+      <Button layoutX="521.0" layoutY="21.0" mnemonicParsing="false" onAction="#findCity2Button" text="Button" />
+      <Label fx:id="actualTemp1" layoutX="119.0" layoutY="78.0" text="Label" />
+      <Label fx:id="maxTemp1" layoutX="119.0" layoutY="95.0" text="Label" />
+      <Label fx:id="minTemp1" layoutX="119.0" layoutY="112.0" text="Label" />
+      <Label fx:id="actualTemp2" layoutX="507.0" layoutY="87.0" text="Label" />
+      <Label fx:id="maxTemp2" layoutX="507.0" layoutY="104.0" text="Label" />
+      <Label fx:id="minTemp2" layoutX="507.0" layoutY="121.0" text="Label" />
+   </children>
+</AnchorPane>
