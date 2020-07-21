@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
 import java.net.URL;
@@ -59,18 +60,41 @@ public class MainWindowController extends BaseController {
     @FXML
     private Label minTemp2;
 
+    private CityWeatherForecast cityWeatherForecast;
     public MainWindowController(ViewFactory viewFactory, String fxmlName) {
+
         super(viewFactory, fxmlName);
+        cityWeatherForecast = new CityWeatherForecast("");
     }
 
     @FXML
     void findCity1Button() {
+        System.out.println("Find first city button!!");
+        if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
+            cityWeatherForecast.setCityName(city1TextField.getText());
+            cityWeatherForecast.setCurrentWeather();
+            maxTemp1.setText(String.valueOf(cityWeatherForecast.getCurrentMaxTemp()));
+        }
+        else{
+            //  errorLabel.setText("Please fill email"); // dodac labela o error
+        }
 
     }
 
     @FXML
     void findCity2Button() {
+        System.out.println("Find second city button!!");
+        
+        // praktycznie to samo co dla pierwszego buttona
+    }
 
+    private boolean fieldWithCityNameIsValid(boolean cityName) {
+        if(cityName) {
+
+            System.out.println("Please fill email");
+            return false;
+        }
+        return true;
     }
 
 }

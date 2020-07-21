@@ -23,65 +23,14 @@ import java.util.logging.Logger;
  */
 public class App extends Application {
 
-    /*
-    @Override
-    public void start(Stage stage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
-
-        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        var scene = new Scene(new StackPane(label), 640, 480);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-     */
-
-
     @Override
     public void start(Stage stage) throws Exception {
-/*
-        String fxmlFile = "paczwa/mainWindow.fxml";
-        FXMLLoader loader = new FXMLLoader();
-        Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
 
-        Scene scene = new Scene(rootNode, 700, 580);
-
-        stage.setTitle("Weather App");
-        stage.setScene(scene);
-        stage.show();
-*/
 
         ViewFactory viewFactory = new ViewFactory();
         viewFactory.showMainWindow();
     }
 
-
-
-
-    /*
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-
-            AnchorPane root = (AnchorPane) FXMLLoader.load(App.class.getResource("mainWindow.fxml"));
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Bluerift Timeline");
-            primaryStage.show();
-
-    }
-
-     */
-
-/*
-    @Override
-    public void start(Stage stage) throws IOException {
-        Scene scene = new Scene(loadFXML("mainWindow"));
-        stage.setScene(scene);
-        stage.show();
-
-    }
-*/
 
 
     private Parent loadFXML(String fxml) throws IOException {
@@ -92,7 +41,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         System.out.println( "Hello World!" );
-
+        /*
         OWMConfig config = new OWMConfig();
         OWM openWeatherMap = new OWM(config.getApiKey());
         openWeatherMap.setUnit(OWM.Unit.METRIC);
@@ -106,9 +55,7 @@ public class App extends Application {
         }catch (APIException e){
             System.out.println(e.getMessage());
         }
-
-
-
+        */
         launch();
     }
 
