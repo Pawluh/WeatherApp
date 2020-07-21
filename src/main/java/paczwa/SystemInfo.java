@@ -1,4 +1,4 @@
-package it.paczwa;
+package paczwa;
 
 public class SystemInfo {
 
