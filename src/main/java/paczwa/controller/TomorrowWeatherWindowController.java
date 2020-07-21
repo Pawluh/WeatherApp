@@ -8,7 +8,7 @@ import paczwa.view.ViewFactory;
 
 import java.io.IOException;
 
-public class TomorrowWeatherController extends BaseController {
+public class TomorrowWeatherWindowController extends BaseController {
 
     @FXML
     private Label humidity1;
@@ -55,7 +55,8 @@ public class TomorrowWeatherController extends BaseController {
     private CityWeatherForecast city1WeatherForecast;
     private CityWeatherForecast city2WeatherForecast;
     private Integer daysFromToday = 1;
-    public TomorrowWeatherController(ViewFactory viewFactory, String fxmlName) {
+
+    public TomorrowWeatherWindowController(ViewFactory viewFactory, String fxmlName) {
 
         super(viewFactory, fxmlName);
         city1WeatherForecast = new CityWeatherForecast("");

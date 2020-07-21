@@ -28,6 +28,7 @@ public class App extends Application {
         ViewFactory viewFactory = new ViewFactory();
         viewFactory.showMainWindow();
        // viewFactory.showTomorrowWeatherController();
+        viewFactory.showWeekForecastWindow();
     }
 
     private Parent loadFXML(String fxml) throws IOException {

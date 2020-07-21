@@ -16,9 +16,15 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-    public void showTomorrowWeatherController(){
+    public void showTomorrowWeatherWindow(){
         System.out.println("tomorrow weather window called");
-        BaseController controller = new TomorrowWeatherController(this, "tomorrowWeatherView.fxml");
+        BaseController controller = new TomorrowWeatherWindowController(this, "tomorrowWeatherWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showWeekForecastWindow(){
+        System.out.println("Forecast for 10 days");
+        BaseController controller = new WeekForecastWindowController(this, "weekForecastWindow.fxml");
         initializeStage(controller);
     }
 
