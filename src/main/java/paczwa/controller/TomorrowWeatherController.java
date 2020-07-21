@@ -8,7 +8,7 @@ import paczwa.view.ViewFactory;
 
 import java.io.IOException;
 
-public class MainWindowController extends BaseController {
+public class TomorrowWeatherController extends BaseController {
 
     @FXML
     private Label humidity1;
@@ -41,16 +41,10 @@ public class MainWindowController extends BaseController {
     private TextField city2TextField;
 
     @FXML
-    private Label actualTemp1;
-
-    @FXML
     private Label maxTemp1;
 
     @FXML
     private Label minTemp1;
-
-    @FXML
-    private Label actualTemp2;
 
     @FXML
     private Label maxTemp2;
@@ -60,9 +54,8 @@ public class MainWindowController extends BaseController {
 
     private CityWeatherForecast city1WeatherForecast;
     private CityWeatherForecast city2WeatherForecast;
-    private Integer daysFromToday = 0;
-
-    public MainWindowController(ViewFactory viewFactory, String fxmlName) {
+    private Integer daysFromToday = 1;
+    public TomorrowWeatherController(ViewFactory viewFactory, String fxmlName) {
 
         super(viewFactory, fxmlName);
         city1WeatherForecast = new CityWeatherForecast("");
@@ -75,7 +68,7 @@ public class MainWindowController extends BaseController {
         if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
             city1WeatherForecast.setCityName(city1TextField.getText());
             city1WeatherForecast.getWeather();
-            actualTemp1.setText(city1WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
+
             maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay(daysFromToday).toString() + "\u2103");
             minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay(daysFromToday).toString() + "\u2103");
             humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay(daysFromToday) +"%");
@@ -93,7 +86,7 @@ public class MainWindowController extends BaseController {
         if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())){
             city2WeatherForecast.setCityName(city2TextField.getText());
             city2WeatherForecast.getWeather();
-            actualTemp2.setText(city2WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
+
             maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay(daysFromToday).toString() + "\u2103");
             minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay(daysFromToday).toString() + "\u2103");
             humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay(daysFromToday) +"%");

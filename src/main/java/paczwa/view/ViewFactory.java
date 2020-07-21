@@ -12,8 +12,13 @@ public class ViewFactory {
 
     public void showMainWindow(){
         System.out.println("main window called");
-
         BaseController controller = new MainWindowController(this, "mainWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showTomorrowWeatherController(){
+        System.out.println("tomorrow weather window called");
+        BaseController controller = new TomorrowWeatherController(this, "tomorrowWeatherView.fxml");
         initializeStage(controller);
     }
 

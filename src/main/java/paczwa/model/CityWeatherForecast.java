@@ -81,31 +81,29 @@ public class CityWeatherForecast {
         return sb.toString();
     }
 
-    public Integer getTodayMaxTemp(){
-        return jsonWithDailyWeatherData.getJSONObject(0).getJSONObject("temp").getInt("max");
-    }
-
-    public Integer getTodayMinTemp(){
-        return jsonWithDailyWeatherData.getJSONObject(0).getJSONObject("temp").getInt("min");
-    }
-
     public Integer getCurrentFeelsLikeTemp(){
         return jsonWithCurrentMainWeatherData.getInt("feels_like");
     }
 
-    public String getCurrentPressure(){
-        return jsonWithCurrentMainWeatherData.get("pressure").toString();
+    public Integer getMaxTempForSpecificDay(Integer daysFromToday){
+        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("max");
     }
 
-    public String getCurrentHumidity(){
-        return jsonWithCurrentMainWeatherData.get("humidity").toString();
+    public Integer getMinTempForSpecificDay(Integer daysFromToday){
+        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("min");
     }
 
-    public String getCurrentWind(){
-        return jsonWithDataAboutCity.getJSONObject("wind").get("speed").toString();
+    public String getPressureForSpecificDay(Integer daysFromToday){
+        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString();
     }
 
-    public String getCurrentClouds(){
-        return jsonWithDataAboutCity.getJSONObject("clouds").get("all").toString();
+    public String getHumidityForSpecificDay(Integer daysFromToday){
+        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("humidity").toString();
+    }
+    public String getWindForSpecificDay(Integer daysFromToday){
+        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("wind_speed").toString();
+    }
+    public String getCloudsForSpecificDay(Integer daysFromToday){
+        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("clouds").toString();
     }
 }
