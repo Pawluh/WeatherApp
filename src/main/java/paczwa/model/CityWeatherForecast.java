@@ -1,13 +1,9 @@
 package paczwa.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import net.aksingh.owmjapis.api.APIException;
 import net.aksingh.owmjapis.core.OWM;
-import net.aksingh.owmjapis.model.CurrentWeather;
-import net.aksingh.owmjapis.model.DailyWeatherForecast;
-import net.aksingh.owmjapis.model.HourlyWeatherForecast;
-import net.aksingh.owmjapis.api.DailyWeatherForecastAPI;
 import paczwa.config.OWMConfig;
 
 import java.io.*;
@@ -18,15 +14,18 @@ import java.nio.charset.Charset;
 public class CityWeatherForecast {
 
     private String cityName;
+    private String lat;
+    private String lon;
     OWMConfig config;
     OWM openWeatherMap;
-    JSONObject jsonWithWeatherData;
+    JSONObject jsonWithDataAboutCity;
+    JSONObject jsonWithCurrentMainWeatherData;
+
+    JSONArray jsonWithDailyWeatherData;
 
     public CityWeatherForecast(String cityName){
         this.cityName = cityName;
         config = new OWMConfig();
-        openWeatherMap = new OWM(config.getApiKey());
-        openWeatherMap.setUnit(OWM.Unit.METRIC);
         System.out.println(config.getApiKey());
 
     }
@@ -34,27 +33,30 @@ public class CityWeatherForecast {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
-// zastanowaić się jak pozbyć sie try catch w kazdej funkcji zwracającej info o pogodzie
-    public void setCurrentWeather(){
-        try {
-            CurrentWeather currentWeather = openWeatherMap.currentWeatherByCityName(this.cityName);
-            System.out.println("Miasto: " + currentWeather.getCityName());
-            getWeather();
-        }catch (APIException | IOException e){
-            System.out.println(e.getMessage());
-        }
+
+    public String getCityName() {
+        return this.cityName;
     }
 
+    public void setLat(){
+        this.lat = jsonWithDataAboutCity.getJSONObject("coord").get("lat").toString();
+    }
 
+    public void setLon(){
+        this.lon = jsonWithDataAboutCity.getJSONObject("coord").get("lon").toString();
+    }
 
     public void getWeather() throws IOException {
-        jsonWithWeatherData =readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=eng&units=metric");
+        jsonWithDataAboutCity = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
+        jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
 
-        jsonWithWeatherData = jsonWithWeatherData.getJSONObject("main");
-        System.out.println("Cisnienie: " + jsonWithWeatherData.get("feels_like").toString() );
+        setLat();
+        setLon();
+        JSONObject jsonWithWeatherData = readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
+        jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
 
+        System.out.println(jsonWithDailyWeatherData);
     }
-
 
     //Reads and returns the JsonObject
     public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
@@ -79,15 +81,31 @@ public class CityWeatherForecast {
         return sb.toString();
     }
 
-    public Double getCurrentMaxTemp(){
-        try {
-            CurrentWeather currentWeather = openWeatherMap.currentWeatherByCityName(this.cityName);
-            System.out.println("Temperatura: " + currentWeather.getMainData().getTempMax());
-            return currentWeather.getMainData().getTempMax();
-        }catch (APIException e){
-            System.out.println(e.getMessage());
-        }
-        return 0.0;
+    public Integer getTodayMaxTemp(){
+        return jsonWithDailyWeatherData.getJSONObject(0).getJSONObject("temp").getInt("max");
     }
 
+    public Integer getTodayMinTemp(){
+        return jsonWithDailyWeatherData.getJSONObject(0).getJSONObject("temp").getInt("min");
+    }
+
+    public Integer getCurrentFeelsLikeTemp(){
+        return jsonWithCurrentMainWeatherData.getInt("feels_like");
+    }
+
+    public String getCurrentPressure(){
+        return jsonWithCurrentMainWeatherData.get("pressure").toString();
+    }
+
+    public String getCurrentHumidity(){
+        return jsonWithCurrentMainWeatherData.get("humidity").toString();
+    }
+
+    public String getCurrentWind(){
+        return jsonWithDataAboutCity.getJSONObject("wind").get("speed").toString();
+    }
+
+    public String getCurrentClouds(){
+        return jsonWithDataAboutCity.getJSONObject("clouds").get("all").toString();
+    }
 }

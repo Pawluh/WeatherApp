@@ -1,14 +1,12 @@
 package paczwa.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 
 public class MainWindowController extends BaseController {
 
@@ -68,12 +66,18 @@ public class MainWindowController extends BaseController {
     }
 
     @FXML
-    void findCity1Button() {
-        System.out.println("Find first city button!!");
+    void findCity1Button() throws IOException {
+      //  System.out.println("Find first city button!!");
         if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
             cityWeatherForecast.setCityName(city1TextField.getText());
-            cityWeatherForecast.setCurrentWeather();
-            maxTemp1.setText(String.valueOf(cityWeatherForecast.getCurrentMaxTemp()));
+            cityWeatherForecast.getWeather();
+            actualTemp1.setText(cityWeatherForecast.getCurrentFeelsLikeTemp().toString());
+            maxTemp1.setText(cityWeatherForecast.getTodayMaxTemp().toString());
+            minTemp1.setText(cityWeatherForecast.getTodayMinTemp().toString());
+            humidity1.setText(cityWeatherForecast.getCurrentHumidity().toString());
+            pressure1.setText(cityWeatherForecast.getCurrentPressure());
+            wind1.setText(cityWeatherForecast.getCurrentWind());
+            // dodac info o zachmurzeniu
         }
         else{
             //  errorLabel.setText("Please fill email"); // dodac labela o error
