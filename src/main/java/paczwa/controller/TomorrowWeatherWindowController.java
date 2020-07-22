@@ -68,14 +68,14 @@ public class TomorrowWeatherWindowController extends BaseController {
     void setWeatherForCity1Button() throws IOException {
         if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
             city1WeatherForecast.setCityName(city1TextField.getText());
-            city1WeatherForecast.getWeather();
+            city1WeatherForecast.getWeather(daysFromToday);
 
-            maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay(daysFromToday).toString() + "\u2103");
-            minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay(daysFromToday).toString() + "\u2103");
-            humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay(daysFromToday) +"%");
-            pressure1.setText(city1WeatherForecast.getPressureForSpecificDay(daysFromToday) + "mbar");
-            clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay(daysFromToday) + "%");
-            wind1.setText(city1WeatherForecast.getWindForSpecificDay(daysFromToday) +"km/h");
+            maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().toString() + "\u2103");
+            minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().toString() + "\u2103");
+            humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay() +"%");
+            pressure1.setText(city1WeatherForecast.getPressureForSpecificDay() + "mbar");
+            clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
+            wind1.setText(city1WeatherForecast.getWindForSpecificDay() +"km/h");
         }
         else{
             //  errorLabel.setText("Please fill email"); // dodac labela o error
@@ -86,14 +86,14 @@ public class TomorrowWeatherWindowController extends BaseController {
     void setWeatherForCity2Button() throws IOException {
         if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())){
             city2WeatherForecast.setCityName(city2TextField.getText());
-            city2WeatherForecast.getWeather();
+            city2WeatherForecast.getWeather(daysFromToday);
 
-            maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay(daysFromToday).toString() + "\u2103");
-            minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay(daysFromToday).toString() + "\u2103");
-            humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay(daysFromToday) +"%");
-            pressure2.setText(city2WeatherForecast.getPressureForSpecificDay(daysFromToday) + "mbar");
-            clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay(daysFromToday) + "%");
-            wind2.setText(city2WeatherForecast.getWindForSpecificDay(daysFromToday) +"km/h");
+            maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().toString() + "\u2103");
+            minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().toString() + "\u2103");
+            humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay() +"%");
+            pressure2.setText(city2WeatherForecast.getPressureForSpecificDay() + "mbar");
+            clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
+            wind2.setText(city2WeatherForecast.getWindForSpecificDay() +"km/h");
         }
         else{
             //  errorLabel.setText("Please fill email"); // dodac labela o error

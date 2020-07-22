@@ -13,15 +13,23 @@ import java.nio.charset.Charset;
 
 public class CityWeatherForecast {
 
+    OWMConfig config;
+
     private String cityName;
     private String lat;
     private String lon;
-    OWMConfig config;
-    OWM openWeatherMap;
+
     JSONObject jsonWithDataAboutCity;
     JSONObject jsonWithCurrentMainWeatherData;
-
     JSONArray jsonWithDailyWeatherData;
+
+    private Integer feelsLikeTemp;
+    private Integer maxTemp;
+    private Integer minTemp;
+    private String pressure;
+    private String humidity;
+    private String wind;
+    private String clouds;
 
     public CityWeatherForecast(String cityName){
         this.cityName = cityName;
@@ -46,15 +54,16 @@ public class CityWeatherForecast {
         this.lon = jsonWithDataAboutCity.getJSONObject("coord").get("lon").toString();
     }
 
-    public void getWeather() throws IOException {
+    public void getWeather(Integer daysFromToday) throws IOException {
         jsonWithDataAboutCity = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
         jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
 
         setLat();
         setLon();
+
         JSONObject jsonWithWeatherData = readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
         jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
-
+        setWeather(daysFromToday);
         System.out.println(jsonWithDailyWeatherData);
     }
 
@@ -81,29 +90,67 @@ public class CityWeatherForecast {
         return sb.toString();
     }
 
+    private void setWeather(Integer daysFromToday){
+        setFeelsLikeTemp();
+        setMaxTemp(daysFromToday);
+        setMinTemp(daysFromToday);
+        setPressure(daysFromToday);
+        setHumidity(daysFromToday);
+        setWind(daysFromToday);
+        setClouds(daysFromToday);
+    }
+
+    public void setFeelsLikeTemp() {
+        this.feelsLikeTemp = jsonWithCurrentMainWeatherData.getInt("feels_like");
+    }
+
+    public void setMaxTemp(Integer daysFromToday) {
+        this.maxTemp = jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("max");
+    }
+
+    public void setMinTemp(Integer daysFromToday) {
+        this.minTemp = jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("min");;
+    }
+
+    public void setPressure(Integer daysFromToday) {
+        this.pressure = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString();
+    }
+
+    public void setHumidity(Integer daysFromToday) {
+        this.humidity = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("humidity").toString();
+    }
+
+    public void setWind(Integer daysFromToday) {
+        this.wind = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("wind_speed").toString();
+    }
+
+    public void setClouds(Integer daysFromToday) {
+        this.clouds = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("clouds").toString();
+    }
+
     public Integer getCurrentFeelsLikeTemp(){
-        return jsonWithCurrentMainWeatherData.getInt("feels_like");
+        return this.feelsLikeTemp;
     }
 
-    public Integer getMaxTempForSpecificDay(Integer daysFromToday){
-        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("max");
+    public Integer getMaxTempForSpecificDay(){
+        return this.maxTemp;
     }
 
-    public Integer getMinTempForSpecificDay(Integer daysFromToday){
-        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("min");
+    public Integer getMinTempForSpecificDay(){
+        return this.minTemp;
     }
 
-    public String getPressureForSpecificDay(Integer daysFromToday){
-        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString();
+    public String getPressureForSpecificDay(){
+        return this.pressure;
     }
 
-    public String getHumidityForSpecificDay(Integer daysFromToday){
-        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("humidity").toString();
+    public String getHumidityForSpecificDay(){
+        return this.humidity;
     }
-    public String getWindForSpecificDay(Integer daysFromToday){
-        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("wind_speed").toString();
+    public String getWindForSpecificDay(){
+        return this.wind;
     }
-    public String getCloudsForSpecificDay(Integer daysFromToday){
-        return jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("clouds").toString();
+    public String getCloudsForSpecificDay(){
+        return this.clouds;
     }
 }
