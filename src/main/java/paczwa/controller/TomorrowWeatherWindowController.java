@@ -3,6 +3,7 @@ package paczwa.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
@@ -105,6 +106,20 @@ public class TomorrowWeatherWindowController extends BaseController {
             return false;
         }
         return true;
+    }
+
+    @FXML
+    void showTodayWeatherButton() {
+        viewFactory.showMainWindow();
+        Stage stage = (Stage) maxTemp1.getScene().getWindow();
+        viewFactory.closeStage(stage);
+    }
+
+    @FXML
+    void showWeekForecastButton() {
+        viewFactory.showWeekForecastWindow();
+        Stage stage = (Stage) maxTemp1.getScene().getWindow();
+        viewFactory.closeStage(stage);
     }
 
 }

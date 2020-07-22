@@ -7,13 +7,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="272.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.4983277591973244" prefHeight="406.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.4983277591973244" prefHeight="234.0" prefWidth="600.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="271.0">
                <children>
-                  <TableView fx:id="city1ForecastTableView" layoutY="32.0" prefHeight="368.0" prefWidth="296.0">
+                  <TableView fx:id="city1ForecastTableView" layoutY="32.0" prefHeight="202.0" prefWidth="296.0">
                     <columns>
                       <TableColumn fx:id="city1DateColumn" prefWidth="75.0" text="Data" />
                       <TableColumn fx:id="city1DescriptionColumn" prefWidth="75.0" text="Opis dnia" />
@@ -30,7 +30,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="280.0">
                <children>
-                  <TableView fx:id="city2ForecastTableView" layoutY="30.0" prefHeight="368.0" prefWidth="296.0">
+                  <TableView fx:id="city2ForecastTableView" layoutY="30.0" prefHeight="202.0" prefWidth="296.0">
                     <columns>
                       <TableColumn fx:id="city2DateColumn" prefWidth="75.0" text="Data" />
                       <TableColumn fx:id="city2DescriptionColumn" prefWidth="75.0" text="Opis dnia" />
@@ -47,5 +47,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
+      <Button layoutX="47.0" layoutY="239.0" mnemonicParsing="false" onAction="#showTodayWeatherButton" prefHeight="32.0" prefWidth="179.0" text="DZISIAJ" />
+      <Button layoutX="373.0" layoutY="239.0" mnemonicParsing="false" onAction="#showTomorrowWeatherButton" prefHeight="32.0" prefWidth="179.0" text="JUTRO" />
    </children>
 </AnchorPane>

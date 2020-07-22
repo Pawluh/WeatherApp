@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
@@ -115,5 +116,19 @@ public class WeekForecastWindowController extends BaseController implements Init
     public void initialize(URL location, ResourceBundle resources) {
 
 
+    }
+
+    @FXML
+    void showTodayWeatherButton() {
+        viewFactory.showMainWindow();
+        Stage stage = (Stage) city1TextField.getScene().getWindow();
+        viewFactory.closeStage(stage);
+    }
+
+    @FXML
+    void showTomorrowWeatherButton() {
+        viewFactory.showTomorrowWeatherWindow();
+        Stage stage = (Stage) city1TextField.getScene().getWindow();
+        viewFactory.closeStage(stage);
     }
 }
