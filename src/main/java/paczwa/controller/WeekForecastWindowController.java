@@ -46,7 +46,10 @@ public class WeekForecastWindowController extends BaseController implements Init
     private TableColumn<CityWeatherForecast, String> city2DescriptionColumn;
 
     @FXML
-    private TableColumn<CityWeatherForecast, String> city2TempColumn;
+    private TableColumn<CityWeatherForecast, String> city2MaxTempColumn;
+
+    @FXML
+    private TableColumn<CityWeatherForecast, String> city2MinTempColumn;
 
     @FXML
     private TextField city2TextField;
@@ -57,11 +60,11 @@ public class WeekForecastWindowController extends BaseController implements Init
     public WeekForecastWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
         city1WeatherForecast = FXCollections.observableArrayList();
+        city2WeatherForecast = FXCollections.observableArrayList();
     }
 
     @FXML
     void setWeatherForCity1Button() throws IOException {
-
         if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())) {
             // city1DateColumn.setCellValueFactory(cellData -> cellData.getValue().getPressureForSpecificDay());
             city1DescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
@@ -75,17 +78,28 @@ public class WeekForecastWindowController extends BaseController implements Init
                 e.printStackTrace();
             }
         }
-
     }
 
     @FXML
     void setWeatherForCity2Button() {
+        if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())) {
+            // city1DateColumn.setCellValueFactory(cellData -> cellData.getValue().getPressureForSpecificDay());
+            city2DescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
+            city2MaxTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMaxTempForSpecificDay());
+            city2MinTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMinTempForSpecificDay());
 
+            try {
+                getDataAboutWeather(city2WeatherForecast, city2TextField.getText());
+                city2ForecastTableView.setItems(city2WeatherForecast);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    private void getDataAboutWeather(ObservableList<CityWeatherForecast> cityWeatherForecast, String cityname) throws IOException {
+    private void getDataAboutWeather(ObservableList<CityWeatherForecast> cityWeatherForecast, String cityName) throws IOException {
         for(int i =0 ; i<7 ; i++){
-            CityWeatherForecast cityWeather = new CityWeatherForecast(cityname);
+            CityWeatherForecast cityWeather = new CityWeatherForecast(cityName);
             cityWeather.getWeather(i);
            // cityWeather.setDescription(i);
             cityWeatherForecast.add(cityWeather);

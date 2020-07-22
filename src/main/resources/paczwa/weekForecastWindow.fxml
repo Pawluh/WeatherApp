@@ -34,7 +34,8 @@
                     <columns>
                       <TableColumn fx:id="city2DateColumn" prefWidth="75.0" text="Data" />
                       <TableColumn fx:id="city2DescriptionColumn" prefWidth="75.0" text="Opis dnia" />
-                        <TableColumn fx:id="city2TempColumn" prefWidth="75.0" text="Temp" />
+                        <TableColumn fx:id="city2MaxTempColumn" prefWidth="75.0" text="Temp" />
+                        <TableColumn fx:id="city2MinTempColumn" prefWidth="75.0" text="MinTemp" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
