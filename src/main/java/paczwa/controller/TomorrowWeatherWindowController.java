@@ -65,6 +65,12 @@ public class TomorrowWeatherWindowController extends BaseController implements I
     @FXML
     private Label date2;
 
+    @FXML
+    private Label errorLabel1;
+
+    @FXML
+    private Label errorLabel2;
+
     private CityWeatherForecast city1WeatherForecast;
     private CityWeatherForecast city2WeatherForecast;
     private int daysFromToday = 1;
@@ -83,6 +89,7 @@ public class TomorrowWeatherWindowController extends BaseController implements I
             city1WeatherForecast.getWeather(daysFromToday);
 
             if(city1WeatherForecast.getJsonDataCorrect()) {
+                errorLabel1.setText("");
                 date1.setText(city1WeatherForecast.getDate().get());
                 maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
                 minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
@@ -91,11 +98,11 @@ public class TomorrowWeatherWindowController extends BaseController implements I
                 clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
                 wind1.setText(city1WeatherForecast.getWindForSpecificDay() + "km/h");
             }else {
-                System.out.println("Zle wpsiane miasto");
+                errorLabel1.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
             }
         }
         else{
-            //  errorLabel.setText("Please fill email"); // dodac labela o error
+            errorLabel1.setText("Podaj nazwe miasta");
         }
     }
 
@@ -106,6 +113,7 @@ public class TomorrowWeatherWindowController extends BaseController implements I
             city2WeatherForecast.getWeather(daysFromToday);
 
             if(city2WeatherForecast.getJsonDataCorrect()) {
+                errorLabel2.setText("");
                 date2.setText(city2WeatherForecast.getDate().get());
                 maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
                 minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().get());
@@ -114,17 +122,16 @@ public class TomorrowWeatherWindowController extends BaseController implements I
                 clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
                 wind2.setText(city2WeatherForecast.getWindForSpecificDay() + "km/h");
             }else {
-                System.out.println("Zle wpsiane miasto");
+                errorLabel2.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
             }
         }
         else{
-            //  errorLabel.setText("Please fill email"); // dodac labela o error
+            errorLabel2.setText("Podaj nazwe miasta");
         }
     }
 
     private boolean fieldWithCityNameIsValid(boolean cityName) {
         if(cityName) {
-            System.out.println("Please fill email");
             return false;
         }
         return true;

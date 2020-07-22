@@ -71,6 +71,12 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private Label date2;
 
+    @FXML
+    private Label errorLabel1;
+
+    @FXML
+    private Label errorLabel2;
+
     private CityWeatherForecast city1WeatherForecast;
     private CityWeatherForecast city2WeatherForecast;
     private int daysFromToday = 0;
@@ -88,6 +94,7 @@ public class MainWindowController extends BaseController implements Initializabl
             city1WeatherForecast.getWeather(daysFromToday);
 
             if(city1WeatherForecast.getJsonDataCorrect()){
+                errorLabel1.setText("");
                 date1.setText(city1WeatherForecast.getDate().get());
                 actualTemp1.setText(city1WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
                 maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
@@ -98,11 +105,11 @@ public class MainWindowController extends BaseController implements Initializabl
                 wind1.setText(city1WeatherForecast.getWindForSpecificDay() +"km/h");
             }
             else {
-                System.out.println("Zle wpsiane miasto");
+                errorLabel1.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
             }
         }
         else{
-            //  errorLabel.setText("Please fill email"); // dodac labela o error
+             errorLabel1.setText("Podaj nazwe miasta");
         }
     }
 
@@ -113,6 +120,7 @@ public class MainWindowController extends BaseController implements Initializabl
             city2WeatherForecast.getWeather(daysFromToday);
 
             if(city2WeatherForecast.getJsonDataCorrect()){
+                errorLabel2.setText("");
                 date2.setText(city2WeatherForecast.getDate().get());
                 actualTemp2.setText(city2WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
                 maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
@@ -123,11 +131,11 @@ public class MainWindowController extends BaseController implements Initializabl
                 wind2.setText(city2WeatherForecast.getWindForSpecificDay() +"km/h");
             }
             else {
-                System.out.println("Zle wpsiane miasto");
+                errorLabel2.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
             }
         }
         else{
-            //  errorLabel.setText("Please fill email"); // dodac labela o error
+            errorLabel2.setText("Podaj nazwe miasta");
         }
     }
 
