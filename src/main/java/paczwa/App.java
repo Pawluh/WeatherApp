@@ -27,8 +27,8 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         ViewFactory viewFactory = new ViewFactory();
        // viewFactory.showMainWindow();
-       // viewFactory.showTomorrowWeatherWindow();
-        viewFactory.showWeekForecastWindow();
+        viewFactory.showTomorrowWeatherWindow();
+       // viewFactory.showWeekForecastWindow();
     }
 
     private Parent loadFXML(String fxml) throws IOException {

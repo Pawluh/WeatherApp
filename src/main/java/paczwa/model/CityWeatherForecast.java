@@ -1,13 +1,11 @@
 package paczwa.model;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import paczwa.config.OWMConfig;
-import paczwa.model.TempInteger;
 
 import java.io.*;
 import java.net.URL;
@@ -29,7 +27,7 @@ public class CityWeatherForecast {
     private Integer feelsLikeTemp;
     private StringProperty maxTemp;
     private StringProperty minTemp;
-    private StringProperty pressure;
+    private String pressure;
     private String humidity;
     private String wind;
     private String clouds;
@@ -130,7 +128,7 @@ public class CityWeatherForecast {
     }
 
     public void setPressure(int daysFromToday) {
-        this.pressure = new SimpleStringProperty(jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString());
+        this.pressure = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString();
     }
 
     public void setHumidity(int daysFromToday) {
@@ -157,7 +155,7 @@ public class CityWeatherForecast {
         return this.minTemp;
     }
 
-    public StringProperty getPressureForSpecificDay(){
+    public String getPressureForSpecificDay(){
         return this.pressure;
     }
 

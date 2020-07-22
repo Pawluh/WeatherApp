@@ -1,6 +1,5 @@
 package paczwa.controller;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,9 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import paczwa.model.CityWeatherForecast;
-import paczwa.model.TempInteger;
 import paczwa.view.ViewFactory;
 
 import java.io.IOException;

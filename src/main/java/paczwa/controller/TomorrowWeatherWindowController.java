@@ -69,8 +69,8 @@ public class TomorrowWeatherWindowController extends BaseController {
             city1WeatherForecast.setCityName(city1TextField.getText());
             city1WeatherForecast.getWeather(daysFromToday);
 
-            maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().toString() + "\u2103");
-            minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().toString() + "\u2103");
+            maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
+            minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
             humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay() +"%");
             pressure1.setText(city1WeatherForecast.getPressureForSpecificDay() + "mbar");
             clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
@@ -87,8 +87,8 @@ public class TomorrowWeatherWindowController extends BaseController {
             city2WeatherForecast.setCityName(city2TextField.getText());
             city2WeatherForecast.getWeather(daysFromToday);
 
-            maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().toString() + "\u2103");
-            minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().toString() + "\u2103");
+            maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
+            minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().get());
             humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay() +"%");
             pressure2.setText(city2WeatherForecast.getPressureForSpecificDay() + "mbar");
             clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
