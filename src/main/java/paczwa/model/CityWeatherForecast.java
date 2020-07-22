@@ -61,7 +61,7 @@ public class CityWeatherForecast {
     }
 
     public void getWeather(int daysFromToday) throws IOException {
-        jsonWithDataAboutCity = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
+        jsonWithDataAboutCity = JSONFileReader.readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
         if(isDataCorrect()){
             jsonDataCorrect = true;
             jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
@@ -69,7 +69,7 @@ public class CityWeatherForecast {
             setLat();
             setLon();
 
-            JSONObject jsonWithWeatherData = readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
+            JSONObject jsonWithWeatherData = JSONFileReader.readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
             jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
             setWeather(daysFromToday);
         }
@@ -87,34 +87,6 @@ public class CityWeatherForecast {
 
     public boolean getJsonDataCorrect(){
         return  this.jsonDataCorrect;
-    }
-
-    //Reads and returns the JsonObject
-    public JSONObject readJsonFromUrl(String url) throws JSONException {
-
-        String jsonText;
-        try {
-            InputStream is = new URL(url).openStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            is.close();
-            return json;
-        } catch (IOException e){
-            jsonText = "{\"cod\":\"404\",\"message\":\"city not found\"}";
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        }
-    }
-
-    //Build a String from the read Json file
-    private String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
     }
 
     public void setDescription(int daysFromToday){
@@ -186,19 +158,15 @@ public class CityWeatherForecast {
     public Integer getCurrentFeelsLikeTemp(){
         return this.feelsLikeTemp;
     }
-
     public StringProperty getMaxTempForSpecificDay(){
         return this.maxTemp;
     }
-
     public StringProperty getMinTempForSpecificDay(){
         return this.minTemp;
     }
-
     public String getPressureForSpecificDay(){
         return this.pressure;
     }
-
     public String getHumidityForSpecificDay(){
         return this.humidity;
     }
