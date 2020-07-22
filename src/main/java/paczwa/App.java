@@ -26,8 +26,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ViewFactory viewFactory = new ViewFactory();
-       // viewFactory.showMainWindow();
-        viewFactory.showTomorrowWeatherWindow();
+        viewFactory.showMainWindow();
+       // viewFactory.showTomorrowWeatherWindow();
        // viewFactory.showWeekForecastWindow();
     }
 
@@ -37,7 +37,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println( "Hello World!" );
         launch();
     }
 

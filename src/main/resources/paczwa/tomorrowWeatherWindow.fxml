@@ -25,9 +25,9 @@
       <Label fx:id="pressure1" layoutX="119.0" layoutY="162.0" />
       <Label fx:id="clouds1" layoutX="119.0" layoutY="179.0" />
       <Label fx:id="wind1" layoutX="119.0" layoutY="196.0" />
-      <Label layoutX="16.0" layoutY="48.0" prefHeight="17.0" prefWidth="89.0" text="DATA" />
+      <Label fx:id="date1" layoutX="16.0" layoutY="48.0" prefHeight="17.0" prefWidth="89.0" />
       <TextField fx:id="city1TextField" layoutX="14.0" layoutY="14.0" promptText="Podaj nazwe miasta" />
-      <Button layoutX="169.0" layoutY="14.0" mnemonicParsing="false" onAction="#setWeatherForCity1Button" text="Button" />
+      <Button layoutX="169.0" layoutY="14.0" mnemonicParsing="false" onAction="#setWeatherForCity1Button" text="Szukaj" />
       <Label layoutX="336.0" layoutY="79.0" prefHeight="17.0" prefWidth="89.0" text="Max temp:" />
       <Label layoutX="336.0" layoutY="96.0" prefHeight="17.0" prefWidth="89.0" text="Min temp:" />
       <Label layoutX="336.0" layoutY="130.0" prefHeight="17.0" prefWidth="89.0" text="Aktualne Dane:" />
@@ -39,9 +39,9 @@
       <Label fx:id="pressure2" layoutX="441.0" layoutY="164.0" />
       <Label fx:id="clouds2" layoutX="441.0" layoutY="181.0" />
       <Label fx:id="wind2" layoutX="441.0" layoutY="198.0" />
-      <Label layoutX="338.0" layoutY="48.0" prefHeight="17.0" prefWidth="89.0" text="DATA" />
+      <Label fx:id="date2" layoutX="338.0" layoutY="48.0" prefHeight="17.0" prefWidth="89.0" />
       <TextField fx:id="city2TextField" layoutX="336.0" layoutY="14.0" promptText="Podaj nazwe miasta" />
-      <Button layoutX="491.0" layoutY="14.0" mnemonicParsing="false" onAction="#setWeatherForCity2Button" text="Button" />
+      <Button layoutX="491.0" layoutY="14.0" mnemonicParsing="false" onAction="#setWeatherForCity2Button" text="Szukaj" />
       <Label fx:id="maxTemp1" layoutX="119.0" layoutY="77.0" />
       <Label fx:id="minTemp1" layoutX="119.0" layoutY="94.0" />
       <Label fx:id="maxTemp2" layoutX="441.0" layoutY="81.0" />

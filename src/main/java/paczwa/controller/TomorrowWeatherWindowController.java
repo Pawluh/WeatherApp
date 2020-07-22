@@ -1,6 +1,7 @@
 package paczwa.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -8,8 +9,13 @@ import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
 import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.ResourceBundle;
 
-public class TomorrowWeatherWindowController extends BaseController {
+public class TomorrowWeatherWindowController extends BaseController implements Initializable {
 
     @FXML
     private Label humidity1;
@@ -53,6 +59,12 @@ public class TomorrowWeatherWindowController extends BaseController {
     @FXML
     private Label minTemp2;
 
+    @FXML
+    private Label date1;
+
+    @FXML
+    private Label date2;
+
     private CityWeatherForecast city1WeatherForecast;
     private CityWeatherForecast city2WeatherForecast;
     private int daysFromToday = 1;
@@ -69,6 +81,7 @@ public class TomorrowWeatherWindowController extends BaseController {
         if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
             city1WeatherForecast.setCityName(city1TextField.getText());
             city1WeatherForecast.getWeather(daysFromToday);
+
 
             maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
             minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
@@ -108,6 +121,18 @@ public class TomorrowWeatherWindowController extends BaseController {
         return true;
     }
 
+    public String getDate(int daysFromToday){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, daysFromToday);
+
+        date = calendar.getTime();
+        return formatter.format(date);
+    }
+
     @FXML
     void showTodayWeatherButton() {
         viewFactory.showMainWindow();
@@ -122,5 +147,10 @@ public class TomorrowWeatherWindowController extends BaseController {
         viewFactory.closeStage(stage);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        date1.setText(getDate(daysFromToday));
+        date2.setText(getDate(daysFromToday));
+    }
 }
 

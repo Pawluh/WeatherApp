@@ -37,8 +37,6 @@ public class CityWeatherForecast {
     public CityWeatherForecast(String cityName){
         this.cityName = cityName;
         config = new OWMConfig();
-        System.out.println(config.getApiKey());
-
     }
 
     public void setCityName(String cityName) {
@@ -67,7 +65,6 @@ public class CityWeatherForecast {
         JSONObject jsonWithWeatherData = readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
         jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
         setWeather(daysFromToday);
-        System.out.println(jsonWithDailyWeatherData);
     }
 
     //Reads and returns the JsonObject
@@ -95,7 +92,6 @@ public class CityWeatherForecast {
 
     public void setDescription(int daysFromToday){
         this.description = new SimpleStringProperty(jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONArray("weather").getJSONObject(0).getString("description"));
-        System.out.println(description);
     }
 
     public StringProperty getDescription(){

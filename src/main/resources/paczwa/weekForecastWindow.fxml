@@ -25,7 +25,7 @@
                      </columnResizePolicy>
                   </TableView>
                   <TextField fx:id="city1TextField" layoutY="-2.0" prefHeight="32.0" prefWidth="179.0" promptText="Podaj nazwe miasta" />
-                  <Button layoutX="205.0" mnemonicParsing="false" onAction="#setWeatherForCity1Button" prefHeight="32.0" prefWidth="89.0" text="Button" />
+                  <Button layoutX="205.0" mnemonicParsing="false" onAction="#setWeatherForCity1Button" prefHeight="32.0" prefWidth="89.0" text="Szukaj" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="280.0">
@@ -42,7 +42,7 @@
                      </columnResizePolicy>
                   </TableView>
                   <TextField fx:id="city2TextField" layoutX="7.0" layoutY="-2.0" prefHeight="32.0" prefWidth="179.0" promptText="Podaj nazwe miasta" />
-                  <Button layoutX="207.0" layoutY="-2.0" mnemonicParsing="false" onAction="#setWeatherForCity2Button" prefHeight="32.0" prefWidth="89.0" text="Button" />
+                  <Button layoutX="207.0" layoutY="-2.0" mnemonicParsing="false" onAction="#setWeatherForCity2Button" prefHeight="32.0" prefWidth="89.0" text="Szukaj" />
                </children>
             </AnchorPane>
         </items>
