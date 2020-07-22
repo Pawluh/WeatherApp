@@ -1,10 +1,13 @@
 package paczwa.model;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import net.aksingh.owmjapis.core.OWM;
 import paczwa.config.OWMConfig;
+import paczwa.model.TempInteger;
 
 import java.io.*;
 import java.net.URL;
@@ -24,12 +27,14 @@ public class CityWeatherForecast {
     JSONArray jsonWithDailyWeatherData;
 
     private Integer feelsLikeTemp;
-    private Integer maxTemp;
-    private Integer minTemp;
-    private String pressure;
+    private StringProperty maxTemp;
+    private StringProperty minTemp;
+    private StringProperty pressure;
     private String humidity;
     private String wind;
     private String clouds;
+
+    private StringProperty description;
 
     public CityWeatherForecast(String cityName){
         this.cityName = cityName;
@@ -54,7 +59,7 @@ public class CityWeatherForecast {
         this.lon = jsonWithDataAboutCity.getJSONObject("coord").get("lon").toString();
     }
 
-    public void getWeather(Integer daysFromToday) throws IOException {
+    public void getWeather(int daysFromToday) throws IOException {
         jsonWithDataAboutCity = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
         jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
 
@@ -90,7 +95,16 @@ public class CityWeatherForecast {
         return sb.toString();
     }
 
-    private void setWeather(Integer daysFromToday){
+    public void setDescription(int daysFromToday){
+        this.description = new SimpleStringProperty(jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONArray("weather").getJSONObject(0).getString("description"));
+        System.out.println(description);
+    }
+
+    public StringProperty getDescription(){
+        return this.description;
+    }
+
+    private void setWeather(int daysFromToday){
         setFeelsLikeTemp();
         setMaxTemp(daysFromToday);
         setMinTemp(daysFromToday);
@@ -98,33 +112,36 @@ public class CityWeatherForecast {
         setHumidity(daysFromToday);
         setWind(daysFromToday);
         setClouds(daysFromToday);
+        setDescription(daysFromToday);
     }
 
     public void setFeelsLikeTemp() {
         this.feelsLikeTemp = jsonWithCurrentMainWeatherData.getInt("feels_like");
     }
 
-    public void setMaxTemp(Integer daysFromToday) {
-        this.maxTemp = jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("max");
+    public void setMaxTemp(int daysFromToday) {
+        String maxTemp = String.valueOf(jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("max")) +"\u2103";
+        this.maxTemp = new SimpleStringProperty (maxTemp);
     }
 
-    public void setMinTemp(Integer daysFromToday) {
-        this.minTemp = jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("min");;
+    public void setMinTemp(int daysFromToday) {
+        String minTemp = String.valueOf(jsonWithDailyWeatherData.getJSONObject(daysFromToday).getJSONObject("temp").getInt("min"))+"\u2103";
+        this.minTemp = new SimpleStringProperty (minTemp);
     }
 
-    public void setPressure(Integer daysFromToday) {
-        this.pressure = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString();
+    public void setPressure(int daysFromToday) {
+        this.pressure = new SimpleStringProperty(jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("pressure").toString());
     }
 
-    public void setHumidity(Integer daysFromToday) {
+    public void setHumidity(int daysFromToday) {
         this.humidity = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("humidity").toString();
     }
 
-    public void setWind(Integer daysFromToday) {
+    public void setWind(int daysFromToday) {
         this.wind = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("wind_speed").toString();
     }
 
-    public void setClouds(Integer daysFromToday) {
+    public void setClouds(int daysFromToday) {
         this.clouds = jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("clouds").toString();
     }
 
@@ -132,15 +149,15 @@ public class CityWeatherForecast {
         return this.feelsLikeTemp;
     }
 
-    public Integer getMaxTempForSpecificDay(){
+    public StringProperty getMaxTempForSpecificDay(){
         return this.maxTemp;
     }
 
-    public Integer getMinTempForSpecificDay(){
+    public StringProperty getMinTempForSpecificDay(){
         return this.minTemp;
     }
 
-    public String getPressureForSpecificDay(){
+    public StringProperty getPressureForSpecificDay(){
         return this.pressure;
     }
 

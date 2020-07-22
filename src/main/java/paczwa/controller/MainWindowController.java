@@ -60,10 +60,9 @@ public class MainWindowController extends BaseController {
 
     private CityWeatherForecast city1WeatherForecast;
     private CityWeatherForecast city2WeatherForecast;
-    private Integer daysFromToday = 0;
+    private int daysFromToday = 0;
 
     public MainWindowController(ViewFactory viewFactory, String fxmlName) {
-
         super(viewFactory, fxmlName);
         city1WeatherForecast = new CityWeatherForecast("");
         city2WeatherForecast = new CityWeatherForecast("");
