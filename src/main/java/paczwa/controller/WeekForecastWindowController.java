@@ -13,6 +13,9 @@ import paczwa.view.ViewFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class WeekForecastWindowController extends BaseController implements Initializable {
@@ -64,7 +67,7 @@ public class WeekForecastWindowController extends BaseController implements Init
     @FXML
     void setWeatherForCity1Button() throws IOException {
         if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())) {
-            // city1DateColumn.setCellValueFactory(cellData -> cellData.getValue().getPressureForSpecificDay());
+            city1DateColumn.setCellValueFactory(cellData ->cellData.getValue().getDate() );
             city1DescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
             city1MaxTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMaxTempForSpecificDay());
             city1MinTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMinTempForSpecificDay());
@@ -81,7 +84,7 @@ public class WeekForecastWindowController extends BaseController implements Init
     @FXML
     void setWeatherForCity2Button() {
         if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())) {
-            // city1DateColumn.setCellValueFactory(cellData -> cellData.getValue().getPressureForSpecificDay());
+            city2DateColumn.setCellValueFactory(cellData ->cellData.getValue().getDate() );
             city2DescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
             city2MaxTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMaxTempForSpecificDay());
             city2MinTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMinTempForSpecificDay());
@@ -95,12 +98,18 @@ public class WeekForecastWindowController extends BaseController implements Init
         }
     }
 
+
     private void getDataAboutWeather(ObservableList<CityWeatherForecast> cityWeatherForecast, String cityName) throws IOException {
+        cityWeatherForecast.clear();
         for(int i =0 ; i<7 ; i++){
             CityWeatherForecast cityWeather = new CityWeatherForecast(cityName);
             cityWeather.getWeather(i);
-           // cityWeather.setDescription(i);
-            cityWeatherForecast.add(cityWeather);
+            if(cityWeather.getJsonDataCorrect()){
+                cityWeatherForecast.add(cityWeather);
+            }
+            else{
+                System.out.println("zle miasto");
+            }
         }
     }
 

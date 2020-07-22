@@ -10,6 +10,9 @@ import paczwa.config.OWMConfig;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class CityWeatherForecast {
@@ -33,6 +36,8 @@ public class CityWeatherForecast {
     private String clouds;
 
     private StringProperty description;
+    private StringProperty date;
+    private boolean jsonDataCorrect = true;
 
     public CityWeatherForecast(String cityName){
         this.cityName = cityName;
@@ -57,26 +62,48 @@ public class CityWeatherForecast {
 
     public void getWeather(int daysFromToday) throws IOException {
         jsonWithDataAboutCity = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
-        jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
+        if(isDataCorrect()){
+            jsonDataCorrect = true;
+            jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
 
-        setLat();
-        setLon();
+            setLat();
+            setLon();
 
-        JSONObject jsonWithWeatherData = readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
-        jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
-        setWeather(daysFromToday);
+            JSONObject jsonWithWeatherData = readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
+            jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
+            setWeather(daysFromToday);
+        }
+        else{
+            jsonDataCorrect = false;
+        }
+    }
+
+    private boolean isDataCorrect() {
+        if(jsonWithDataAboutCity.getInt("cod") == 404){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean getJsonDataCorrect(){
+        return  this.jsonDataCorrect;
     }
 
     //Reads and returns the JsonObject
-    public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
+    public JSONObject readJsonFromUrl(String url) throws JSONException {
+
+        String jsonText;
         try {
+            InputStream is = new URL(url).openStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
+            jsonText = readAll(rd);
+            JSONObject json = new JSONObject(jsonText);
+            is.close();
+            return json;
+        } catch (IOException e){
+            jsonText = "{\"cod\":\"404\",\"message\":\"city not found\"}";
             JSONObject json = new JSONObject(jsonText);
             return json;
-        } finally {
-            is.close();
         }
     }
 
@@ -98,6 +125,22 @@ public class CityWeatherForecast {
         return this.description;
     }
 
+    public void setDate(int daysFromToday){
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, daysFromToday);
+
+            date = calendar.getTime();
+            this.date = new SimpleStringProperty(formatter.format(date));
+    }
+
+    public StringProperty getDate(){
+        return this.date;
+    }
+
     private void setWeather(int daysFromToday){
         setFeelsLikeTemp();
         setMaxTemp(daysFromToday);
@@ -107,6 +150,7 @@ public class CityWeatherForecast {
         setWind(daysFromToday);
         setClouds(daysFromToday);
         setDescription(daysFromToday);
+        setDate(daysFromToday);
     }
 
     public void setFeelsLikeTemp() {

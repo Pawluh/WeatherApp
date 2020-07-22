@@ -87,13 +87,19 @@ public class MainWindowController extends BaseController implements Initializabl
             city1WeatherForecast.setCityName(city1TextField.getText());
             city1WeatherForecast.getWeather(daysFromToday);
 
-            actualTemp1.setText(city1WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
-            maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
-            minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
-            humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay() +"%");
-            pressure1.setText(city1WeatherForecast.getPressureForSpecificDay() + "mbar");
-            clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
-            wind1.setText(city1WeatherForecast.getWindForSpecificDay() +"km/h");
+            if(city1WeatherForecast.getJsonDataCorrect()){
+                date1.setText(city1WeatherForecast.getDate().get());
+                actualTemp1.setText(city1WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
+                maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
+                minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
+                humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay() +"%");
+                pressure1.setText(city1WeatherForecast.getPressureForSpecificDay() + "mbar");
+                clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
+                wind1.setText(city1WeatherForecast.getWindForSpecificDay() +"km/h");
+            }
+            else {
+                System.out.println("Zle wpsiane miasto");
+            }
         }
         else{
             //  errorLabel.setText("Please fill email"); // dodac labela o error
@@ -106,13 +112,19 @@ public class MainWindowController extends BaseController implements Initializabl
             city2WeatherForecast.setCityName(city2TextField.getText());
             city2WeatherForecast.getWeather(daysFromToday);
 
-            actualTemp2.setText(city2WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
-            maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
-            minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().get());
-            humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay() +"%");
-            pressure2.setText(city2WeatherForecast.getPressureForSpecificDay() + "mbar");
-            clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
-            wind2.setText(city2WeatherForecast.getWindForSpecificDay() +"km/h");
+            if(city2WeatherForecast.getJsonDataCorrect()){
+                date2.setText(city2WeatherForecast.getDate().get());
+                actualTemp2.setText(city2WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
+                maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
+                minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().get());
+                humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay() +"%");
+                pressure2.setText(city2WeatherForecast.getPressureForSpecificDay() + "mbar");
+                clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
+                wind2.setText(city2WeatherForecast.getWindForSpecificDay() +"km/h");
+            }
+            else {
+                System.out.println("Zle wpsiane miasto");
+            }
         }
         else{
             //  errorLabel.setText("Please fill email"); // dodac labela o error
@@ -125,18 +137,6 @@ public class MainWindowController extends BaseController implements Initializabl
             return false;
         }
         return true;
-    }
-
-    public String getDate(int daysFromToday){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, daysFromToday);
-
-        date = calendar.getTime();
-        return formatter.format(date);
     }
 
     @FXML
@@ -155,8 +155,7 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        date1.setText(getDate(daysFromToday));
-        date2.setText(getDate(daysFromToday));
+
     }
 }
 
