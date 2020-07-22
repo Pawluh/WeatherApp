@@ -10,9 +10,6 @@ import paczwa.view.ViewFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class TomorrowWeatherWindowController extends BaseController implements Initializable {

@@ -31,7 +31,6 @@
             <artifactId>json</artifactId>
             <version>20200518</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -75,7 +74,5 @@
                 </executions>
             </plugin>
         </plugins>
-
-
     </build>
 </project>

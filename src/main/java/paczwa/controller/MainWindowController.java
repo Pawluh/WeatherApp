@@ -10,9 +10,6 @@ import paczwa.view.ViewFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
@@ -141,7 +138,6 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private boolean fieldWithCityNameIsValid(boolean cityName) {
         if(cityName) {
-            System.out.println("Please fill email");
             return false;
         }
         return true;
