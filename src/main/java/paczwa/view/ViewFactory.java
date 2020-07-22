@@ -7,8 +7,15 @@ import javafx.stage.Stage;
 import paczwa.controller.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ViewFactory {
+
+    private ArrayList<Stage> activeStages;
+
+    public ViewFactory() {
+        activeStages = new ArrayList<Stage>();
+    }
 
     public void showMainWindow(){
         System.out.println("main window called");
@@ -42,5 +49,11 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        activeStages.add(stage);
+    }
+
+    public  void closeStage(Stage stageToClose){
+        stageToClose.close();
+        activeStages.remove(stageToClose);
     }
 }
