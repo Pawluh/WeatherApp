@@ -8,13 +8,14 @@ import paczwa.controller.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewFactory {
 
-    private ArrayList<Stage> activeStages;
+    private List<Stage> activeStages;
 
     public ViewFactory() {
-        activeStages = new ArrayList<Stage>();
+        activeStages = new ArrayList<>();
     }
 
     public void showMainWindow(){

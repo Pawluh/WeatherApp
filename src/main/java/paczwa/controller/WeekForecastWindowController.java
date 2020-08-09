@@ -73,12 +73,18 @@ public class WeekForecastWindowController extends BaseController implements Init
 
     @FXML
     void setWeatherForCity1Button() {
-        setCityData(city1TextField, errorLabel1, city1WeatherForecast, city1DateColumn, city1DescriptionColumn, city1MaxTempColumn, city1MinTempColumn, city1ForecastTableView);
+        setCityData(city1TextField, errorLabel1,
+                city1WeatherForecast, city1DateColumn,
+                city1DescriptionColumn, city1MaxTempColumn,
+                city1MinTempColumn, city1ForecastTableView);
     }
 
     @FXML
     void setWeatherForCity2Button() {
-        setCityData(city2TextField, errorLabel2, city2WeatherForecast, city2DateColumn, city2DescriptionColumn, city2MaxTempColumn, city2MinTempColumn, city2ForecastTableView);
+        setCityData(city2TextField, errorLabel2,
+                city2WeatherForecast, city2DateColumn,
+                city2DescriptionColumn, city2MaxTempColumn,
+                city2MinTempColumn, city2ForecastTableView);
     }
 
     private void setCityData(TextField cityTextField,
@@ -92,10 +98,12 @@ public class WeekForecastWindowController extends BaseController implements Init
         if (CityNameValidator.validate(cityTextField.getText())) {
             errorLabel.setText("");
             cityWeatherForecast.clear();
-            cityDateColumn.setCellValueFactory(cellData -> cellData.getValue().getDate());
-            cityDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
-            cityMaxTempColumn.setCellValueFactory(cellData -> cellData.getValue().getMaxTempForSpecificDay());
-            cityMinTempColumn.setCellValueFactory(cellData -> cellData.getValue().getMinTempForSpecificDay());
+            cityDateColumn.setCellValueFactory(cellData -> cellData.getValue().getWeather().dateProperty());
+            cityDescriptionColumn.setCellValueFactory(cellData -> {
+                return cellData.getValue().getWeather().descriptionProperty();
+            });
+            cityMaxTempColumn.setCellValueFactory(cellData -> cellData.getValue().getWeather().maxTempProperty());
+            cityMinTempColumn.setCellValueFactory(cellData -> cellData.getValue().getWeather().minTempProperty());
 
             try {
                 getDataAboutWeather(cityWeatherForecast, cityTextField.getText());
@@ -112,7 +120,7 @@ public class WeekForecastWindowController extends BaseController implements Init
     private void getDataAboutWeather(ObservableList<CityWeatherForecast> cityWeatherForecast, String cityName) throws IOException {
         for(int i =0 ; i<DAYS_AMOUNT_TO_DISPLAY_WEATHER ; i++){
             CityWeatherForecast cityWeather = new CityWeatherForecast(cityName);
-            cityWeather.getWeather(i);
+            cityWeather.setWeather(i);
             if(cityWeather.getJsonDataCorrect()){
                 cityWeatherForecast.add(cityWeather);
             }
