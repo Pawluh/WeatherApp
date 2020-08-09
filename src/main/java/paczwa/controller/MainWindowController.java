@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import paczwa.config.Messages;
+import paczwa.model.CityNameValidator;
 import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
@@ -102,7 +103,7 @@ public class MainWindowController extends BaseController implements Initializabl
                              Label minTemp, Label humidity,
                              Label pressure, Label clouds,
                              Label wind) throws IOException {
-        if (fieldWithCityNameIsValid(cityTextField.getText().isEmpty())) {
+        if (CityNameValidator.validate(cityTextField.getText())) {
             cityWeatherForecast.setCityName(cityTextField.getText());
             cityWeatherForecast.getWeather(DAYS_FROM_TODAY);
 
@@ -122,13 +123,6 @@ public class MainWindowController extends BaseController implements Initializabl
         } else {
             errorLabel.setText(Messages.EMPTY_CITY_NAME);
         }
-    }
-
-    private boolean fieldWithCityNameIsValid(boolean cityName) {
-        if (cityName) {
-            return false;
-        }
-        return true;
     }
 
     @FXML
