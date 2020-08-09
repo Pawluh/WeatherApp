@@ -141,7 +141,7 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        //empty
     }
 }
 

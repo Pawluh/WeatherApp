@@ -5,6 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import paczwa.config.Messages;
+import paczwa.model.CityNameValidator;
 import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
@@ -68,9 +70,9 @@ public class TomorrowWeatherWindowController extends BaseController implements I
     @FXML
     private Label errorLabel2;
 
-    private CityWeatherForecast city1WeatherForecast;
-    private CityWeatherForecast city2WeatherForecast;
-    private int daysFromToday = 1;
+    private final CityWeatherForecast city1WeatherForecast;
+    private final CityWeatherForecast city2WeatherForecast;
+    private static final int daysFromToday = 1;
 
     public TomorrowWeatherWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
@@ -78,60 +80,41 @@ public class TomorrowWeatherWindowController extends BaseController implements I
         city2WeatherForecast = new CityWeatherForecast("");
     }
 
-
     @FXML
     void setWeatherForCity1Button() throws IOException {
-        if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
-            city1WeatherForecast.setCityName(city1TextField.getText());
-            city1WeatherForecast.getWeather(daysFromToday);
-
-            if(city1WeatherForecast.getJsonDataCorrect()) {
-                errorLabel1.setText("");
-                date1.setText(city1WeatherForecast.getDate().get());
-                maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
-                minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
-                humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay() + "%");
-                pressure1.setText(city1WeatherForecast.getPressureForSpecificDay() + "mbar");
-                clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
-                wind1.setText(city1WeatherForecast.getWindForSpecificDay() + "km/h");
-            }else {
-                errorLabel1.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
-            }
-        }
-        else{
-            errorLabel1.setText("Podaj nazwe miasta");
-        }
+        setCityData(city1TextField, city1WeatherForecast, errorLabel1, date1, maxTemp1, minTemp1, humidity1, pressure1, clouds1, wind1);
     }
 
     @FXML
     void setWeatherForCity2Button() throws IOException {
-        if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())) {
-            city2WeatherForecast.setCityName(city2TextField.getText());
-            city2WeatherForecast.getWeather(daysFromToday);
-
-            if(city2WeatherForecast.getJsonDataCorrect()) {
-                errorLabel2.setText("");
-                date2.setText(city2WeatherForecast.getDate().get());
-                maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
-                minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().get());
-                humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay() + "%");
-                pressure2.setText(city2WeatherForecast.getPressureForSpecificDay() + "mbar");
-                clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
-                wind2.setText(city2WeatherForecast.getWindForSpecificDay() + "km/h");
-            }else {
-                errorLabel2.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
-            }
-        }
-        else{
-            errorLabel2.setText("Podaj nazwe miasta");
-        }
+        setCityData(city2TextField, city2WeatherForecast, errorLabel2, date2, maxTemp2, minTemp2, humidity2, pressure2, clouds2, wind2);
     }
 
-    private boolean fieldWithCityNameIsValid(boolean cityName) {
-        if(cityName) {
-            return false;
+    private void setCityData(TextField cityTextField,
+                             CityWeatherForecast cityWeatherForecast,
+                             Label errorLabel, Label date,
+                             Label maxTemp, Label minTemp,
+                             Label humidity, Label pressure,
+                             Label clouds, Label wind) throws IOException {
+        if (CityNameValidator.validate(cityTextField.getText())) {
+            cityWeatherForecast.setCityName(cityTextField.getText());
+            cityWeatherForecast.getWeather(daysFromToday);
+
+            if (cityWeatherForecast.getJsonDataCorrect()) {
+                errorLabel.setText("");
+                date.setText(cityWeatherForecast.getDate().get());
+                maxTemp.setText(cityWeatherForecast.getMaxTempForSpecificDay().get());
+                minTemp.setText(cityWeatherForecast.getMinTempForSpecificDay().get());
+                humidity.setText(cityWeatherForecast.getHumidityForSpecificDay() + "%");
+                pressure.setText(cityWeatherForecast.getPressureForSpecificDay() + "mbar");
+                clouds.setText(cityWeatherForecast.getCloudsForSpecificDay() + "%");
+                wind.setText(cityWeatherForecast.getWindForSpecificDay() + "km/h");
+            } else {
+                errorLabel.setText(Messages.WRONG_CITY);
+            }
+        } else {
+            errorLabel.setText(Messages.EMPTY_CITY_NAME);
         }
-        return true;
     }
 
     @FXML
@@ -150,8 +133,7 @@ public class TomorrowWeatherWindowController extends BaseController implements I
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
+        //empty
     }
 }
 
