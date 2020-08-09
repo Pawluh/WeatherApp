@@ -9,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import paczwa.config.Messages;
+import paczwa.model.CityNameValidator;
 import paczwa.model.CityWeatherForecast;
 import paczwa.view.ViewFactory;
 
@@ -59,8 +61,8 @@ public class WeekForecastWindowController extends BaseController implements Init
     @FXML
     private Label errorLabel2;
 
-    private ObservableList<CityWeatherForecast> city1WeatherForecast;
-    private ObservableList<CityWeatherForecast> city2WeatherForecast;
+    private final ObservableList<CityWeatherForecast> city1WeatherForecast;
+    private final ObservableList<CityWeatherForecast> city2WeatherForecast;
 
     public WeekForecastWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
@@ -69,46 +71,39 @@ public class WeekForecastWindowController extends BaseController implements Init
     }
 
     @FXML
-    void setWeatherForCity1Button() throws IOException {
-        if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())) {
-            errorLabel1.setText("");
-            city1WeatherForecast.clear();
-            city1DateColumn.setCellValueFactory(cellData ->cellData.getValue().getDate() );
-            city1DescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
-            city1MaxTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMaxTempForSpecificDay());
-            city1MinTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMinTempForSpecificDay());
-
-            try {
-                getDataAboutWeather(city1WeatherForecast, city1TextField.getText());
-                city1ForecastTableView.setItems(city1WeatherForecast);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            errorLabel1.setText("Podaj nazwe miasta");
-        }
+    void setWeatherForCity1Button() {
+        setCityData(city1TextField, errorLabel1, city1WeatherForecast, city1DateColumn, city1DescriptionColumn, city1MaxTempColumn, city1MinTempColumn, city1ForecastTableView);
     }
 
     @FXML
     void setWeatherForCity2Button() {
-        if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())) {
-            errorLabel2.setText("");
-            city2WeatherForecast.clear();
-            city2DateColumn.setCellValueFactory(cellData ->cellData.getValue().getDate() );
-            city2DescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
-            city2MaxTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMaxTempForSpecificDay());
-            city2MinTempColumn.setCellValueFactory(cellData ->  cellData.getValue().getMinTempForSpecificDay());
+        setCityData(city2TextField, errorLabel2, city2WeatherForecast, city2DateColumn, city2DescriptionColumn, city2MaxTempColumn, city2MinTempColumn, city2ForecastTableView);
+    }
+
+    private void setCityData(TextField cityTextField,
+                             Label errorLabel,
+                             ObservableList<CityWeatherForecast> cityWeatherForecast,
+                             TableColumn<CityWeatherForecast, String> cityDateColumn,
+                             TableColumn<CityWeatherForecast, String> cityDescriptionColumn,
+                             TableColumn<CityWeatherForecast, String> cityMaxTempColumn,
+                             TableColumn<CityWeatherForecast, String> cityMinTempColumn,
+                             TableView<CityWeatherForecast> cityForecastTableView) {
+        if (CityNameValidator.validate(cityTextField.getText())) {
+            errorLabel.setText("");
+            cityWeatherForecast.clear();
+            cityDateColumn.setCellValueFactory(cellData -> cellData.getValue().getDate());
+            cityDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
+            cityMaxTempColumn.setCellValueFactory(cellData -> cellData.getValue().getMaxTempForSpecificDay());
+            cityMinTempColumn.setCellValueFactory(cellData -> cellData.getValue().getMinTempForSpecificDay());
 
             try {
-                getDataAboutWeather(city2WeatherForecast, city2TextField.getText());
-                city2ForecastTableView.setItems(city2WeatherForecast);
+                getDataAboutWeather(cityWeatherForecast, cityTextField.getText());
+                cityForecastTableView.setItems(cityWeatherForecast);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else{
-            errorLabel2.setText("Podaj nazwe miasta");
+        } else {
+            errorLabel.setText(Messages.EMPTY_CITY_NAME);
         }
     }
 
@@ -123,13 +118,6 @@ public class WeekForecastWindowController extends BaseController implements Init
                 errorLabel1.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
             }
         }
-    }
-
-    private boolean fieldWithCityNameIsValid(boolean cityName) {
-        if(cityName) {
-            return false;
-        }
-        return true;
     }
 
     @Override
