@@ -74,9 +74,9 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private Label errorLabel2;
 
-    private CityWeatherForecast city1WeatherForecast;
-    private CityWeatherForecast city2WeatherForecast;
-    private int daysFromToday = 0;
+    private final CityWeatherForecast city1WeatherForecast;
+    private final CityWeatherForecast city2WeatherForecast;
+    private static final int DAYS_FROM_TODAY = 0;
 
     public MainWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
@@ -86,53 +86,41 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     void setWeatherForCity1Button() throws IOException {
-        if(fieldWithCityNameIsValid(city1TextField.getText().isEmpty())){
-            city1WeatherForecast.setCityName(city1TextField.getText());
-            city1WeatherForecast.getWeather(daysFromToday);
-
-            if(city1WeatherForecast.getJsonDataCorrect()){
-                errorLabel1.setText("");
-                date1.setText(city1WeatherForecast.getDate().get());
-                actualTemp1.setText(city1WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
-                maxTemp1.setText(city1WeatherForecast.getMaxTempForSpecificDay().get());
-                minTemp1.setText(city1WeatherForecast.getMinTempForSpecificDay().get());
-                humidity1.setText(city1WeatherForecast.getHumidityForSpecificDay() +"%");
-                pressure1.setText(city1WeatherForecast.getPressureForSpecificDay() + "mbar");
-                clouds1.setText(city1WeatherForecast.getCloudsForSpecificDay() + "%");
-                wind1.setText(city1WeatherForecast.getWindForSpecificDay() +"km/h");
-            }
-            else {
-                errorLabel1.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
-            }
-        }
-        else{
-             errorLabel1.setText("Podaj nazwe miasta");
-        }
+        setCityData(city1TextField, city1WeatherForecast, errorLabel1, date1, actualTemp1, maxTemp1, minTemp1, humidity1, pressure1, clouds1, wind1);
     }
 
     @FXML
     void setWeatherForCity2Button() throws IOException {
-        if(fieldWithCityNameIsValid(city2TextField.getText().isEmpty())){
-            city2WeatherForecast.setCityName(city2TextField.getText());
-            city2WeatherForecast.getWeather(daysFromToday);
+        setCityData(city2TextField, city2WeatherForecast, errorLabel2, date2, actualTemp2, maxTemp2, minTemp2, humidity2, pressure2, clouds2, wind2);
+    }
 
-            if(city2WeatherForecast.getJsonDataCorrect()){
-                errorLabel2.setText("");
-                date2.setText(city2WeatherForecast.getDate().get());
-                actualTemp2.setText(city2WeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
-                maxTemp2.setText(city2WeatherForecast.getMaxTempForSpecificDay().get());
-                minTemp2.setText(city2WeatherForecast.getMinTempForSpecificDay().get());
-                humidity2.setText(city2WeatherForecast.getHumidityForSpecificDay() +"%");
-                pressure2.setText(city2WeatherForecast.getPressureForSpecificDay() + "mbar");
-                clouds2.setText(city2WeatherForecast.getCloudsForSpecificDay() + "%");
-                wind2.setText(city2WeatherForecast.getWindForSpecificDay() +"km/h");
+    private void setCityData(TextField cityTextField,
+                             CityWeatherForecast cityWeatherForecast,
+                             Label errorLabel, Label date,
+                             Label actualTemp, Label maxTemp,
+                             Label minTemp, Label humidity,
+                             Label pressure, Label clouds,
+                             Label wind) throws IOException
+    {
+        if (fieldWithCityNameIsValid(cityTextField.getText().isEmpty())) {
+            cityWeatherForecast.setCityName(cityTextField.getText());
+            cityWeatherForecast.getWeather(DAYS_FROM_TODAY);
+
+            if (cityWeatherForecast.getJsonDataCorrect()) {
+                errorLabel.setText("");
+                date.setText(cityWeatherForecast.getDate().get());
+                actualTemp.setText(cityWeatherForecast.getCurrentFeelsLikeTemp().toString() + "\u2103");
+                maxTemp.setText(cityWeatherForecast.getMaxTempForSpecificDay().get());
+                minTemp.setText(cityWeatherForecast.getMinTempForSpecificDay().get());
+                humidity.setText(cityWeatherForecast.getHumidityForSpecificDay() + "%");
+                pressure.setText(cityWeatherForecast.getPressureForSpecificDay() + "mbar");
+                clouds.setText(cityWeatherForecast.getCloudsForSpecificDay() + "%");
+                wind.setText(cityWeatherForecast.getWindForSpecificDay() + "km/h");
+            } else {
+                errorLabel.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
             }
-            else {
-                errorLabel2.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
-            }
-        }
-        else{
-            errorLabel2.setText("Podaj nazwe miasta");
+        } else {
+            errorLabel.setText("Podaj nazwe miasta");
         }
     }
 
