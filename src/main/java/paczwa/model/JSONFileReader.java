@@ -9,20 +9,15 @@ import java.nio.charset.Charset;
 
 public class JSONFileReader {
 
-    public static JSONObject readJsonFromUrl(String url) throws JSONException {
-
-        String jsonText;
+    public static JSONObject readJsonFromUrl(String url) throws JSONException, IOException  {
+        InputStream is = new URL(url).openStream();
         try {
-            InputStream is = new URL(url).openStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            jsonText = readAll(rd);
+            String jsonText = readAll(rd);
             JSONObject json = new JSONObject(jsonText);
+            return json;
+        }  finally {
             is.close();
-            return json;
-        } catch (IOException e){
-            jsonText = "{\"cod\":\"404\",\"message\":\"city not found\"}";
-            JSONObject json = new JSONObject(jsonText);
-            return json;
         }
     }
 

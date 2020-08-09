@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import paczwa.config.OWMConfig;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,6 @@ public class CityWeatherForecast {
     private JSONObject jsonWithDataAboutCity;
     private JSONObject jsonWithCurrentMainWeatherData;
     private JSONArray jsonWithDailyWeatherData;
-    private boolean jsonDataCorrect = false;
 
     public CityWeatherForecast(String cityName)
     {
@@ -27,27 +27,11 @@ public class CityWeatherForecast {
         weather = new Weather();
     }
 
-    public Weather getWeather() {
-        return weather;
-    }
+    public boolean setWeather(int daysFromToday) {
+        try {
+            jsonWithDataAboutCity = JSONFileReader.readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="
+                    +this.cityName+"&appid="+OWMConfig.API_KEY+"&lang=pl&units=metric");
 
-    private boolean isJSONDataCorrect() {
-        if(jsonWithDataAboutCity.getInt("cod") == 404){
-            jsonDataCorrect = false;
-            return false;
-        }
-        jsonDataCorrect = true;
-        return true;
-    }
-
-    public boolean getJsonDataCorrect(){
-        return  this.jsonDataCorrect;
-    }
-
-    public void setWeather(int daysFromToday){
-        jsonWithDataAboutCity = JSONFileReader.readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="
-                +this.cityName+"&appid="+OWMConfig.API_KEY+"&lang=pl&units=metric");
-        if(isJSONDataCorrect()){
             jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
             setLocation();
 
@@ -55,19 +39,13 @@ public class CityWeatherForecast {
                     +this.lat+"&lon="+this.lon+"& exclude=daily&appid="+OWMConfig.API_KEY+"&lang=pl&units=metric");
             jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
 
-            setDate(daysFromToday);
-            setDescription(daysFromToday);
-            setFeelsLikeTemp();
-            setMaxTemp(daysFromToday);
-            setMinTemp(daysFromToday);
-            setPressure(daysFromToday);
-            setHumidity(daysFromToday);
-            setWind(daysFromToday);
-            setClouds(daysFromToday);
+            setWeatherData(daysFromToday);
+            return true;
+        } catch (IOException e) {
+            return false;
         }
-        else{
-            return;
-        }
+
+
     }
 
     private void setLocation() {
@@ -82,6 +60,18 @@ public class CityWeatherForecast {
     }
     private void setLon(){
         this.lon = jsonWithDataAboutCity.getJSONObject("coord").get("lon").toString();
+    }
+
+    private void setWeatherData(int daysFromToday){
+        setDate(daysFromToday);
+        setDescription(daysFromToday);
+        setFeelsLikeTemp();
+        setMaxTemp(daysFromToday);
+        setMinTemp(daysFromToday);
+        setPressure(daysFromToday);
+        setHumidity(daysFromToday);
+        setWind(daysFromToday);
+        setClouds(daysFromToday);
     }
 
     private void setDate(int daysFromToday){
@@ -125,4 +115,7 @@ public class CityWeatherForecast {
         weather.setClouds(jsonWithDailyWeatherData.getJSONObject(daysFromToday).get("clouds").toString());
     }
 
+    public Weather getWeather() {
+        return weather;
+    }
 }

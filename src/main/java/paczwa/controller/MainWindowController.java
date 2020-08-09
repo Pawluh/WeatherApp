@@ -112,9 +112,8 @@ public class MainWindowController extends BaseController implements Initializabl
                              Label wind) {
         if (CityNameValidator.validate(cityTextField.getText())) {
             cityWeatherForecast.setCityName(cityTextField.getText());
-            cityWeatherForecast.setWeather(DAYS_FROM_TODAY);
 
-            if (cityWeatherForecast.getJsonDataCorrect()) {
+            if (cityWeatherForecast.setWeather(DAYS_FROM_TODAY)) {
                 errorLabel.setText("");
                 date.setText(cityWeatherForecast.getWeather().getDate());
                 actualTemp.setText(cityWeatherForecast.getWeather().getFeelsLikeTemp().toString() + "\u2103");

@@ -106,9 +106,8 @@ public class TomorrowWeatherWindowController extends BaseController implements I
                              Label clouds, Label wind) throws IOException {
         if (CityNameValidator.validate(cityTextField.getText())) {
             cityWeatherForecast.setCityName(cityTextField.getText());
-            cityWeatherForecast.setWeather(daysFromToday);
 
-            if (cityWeatherForecast.getJsonDataCorrect()) {
+            if (cityWeatherForecast.setWeather(daysFromToday)) {
                 errorLabel.setText("");
                 date.setText(cityWeatherForecast.getWeather().getDate());
                 maxTemp.setText(cityWeatherForecast.getWeather().getMaxTemp());

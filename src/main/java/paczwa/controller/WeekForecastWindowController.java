@@ -98,12 +98,14 @@ public class WeekForecastWindowController extends BaseController implements Init
         if (CityNameValidator.validate(cityTextField.getText())) {
             errorLabel.setText("");
             cityWeatherForecast.clear();
-            cityDateColumn.setCellValueFactory(cellData -> cellData.getValue().getWeather().dateProperty());
-            cityDescriptionColumn.setCellValueFactory(cellData -> {
-                return cellData.getValue().getWeather().descriptionProperty();
-            });
-            cityMaxTempColumn.setCellValueFactory(cellData -> cellData.getValue().getWeather().maxTempProperty());
-            cityMinTempColumn.setCellValueFactory(cellData -> cellData.getValue().getWeather().minTempProperty());
+            cityDateColumn.setCellValueFactory(cellData -> cellData
+                    .getValue().getWeather().dateProperty());
+            cityDescriptionColumn.setCellValueFactory(cellData -> cellData
+                    .getValue().getWeather().descriptionProperty());
+            cityMaxTempColumn.setCellValueFactory(cellData -> cellData
+                    .getValue().getWeather().maxTempProperty());
+            cityMinTempColumn.setCellValueFactory(cellData -> cellData
+                    .getValue().getWeather().minTempProperty());
 
             try {
                 getDataAboutWeather(cityWeatherForecast, cityTextField.getText());
@@ -120,8 +122,7 @@ public class WeekForecastWindowController extends BaseController implements Init
     private void getDataAboutWeather(ObservableList<CityWeatherForecast> cityWeatherForecast, String cityName) throws IOException {
         for(int i =0 ; i<DAYS_AMOUNT_TO_DISPLAY_WEATHER ; i++){
             CityWeatherForecast cityWeather = new CityWeatherForecast(cityName);
-            cityWeather.setWeather(i);
-            if(cityWeather.getJsonDataCorrect()){
+            if(cityWeather.setWeather(i)){
                 cityWeatherForecast.add(cityWeather);
             }
             else{
