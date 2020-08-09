@@ -63,6 +63,7 @@ public class WeekForecastWindowController extends BaseController implements Init
 
     private final ObservableList<CityWeatherForecast> city1WeatherForecast;
     private final ObservableList<CityWeatherForecast> city2WeatherForecast;
+    private static final int DAYS_AMOUNT_TO_DISPLAY_WEATHER = 7;
 
     public WeekForecastWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
@@ -100,6 +101,7 @@ public class WeekForecastWindowController extends BaseController implements Init
                 getDataAboutWeather(cityWeatherForecast, cityTextField.getText());
                 cityForecastTableView.setItems(cityWeatherForecast);
             } catch (IOException e) {
+                errorLabel.setText(Messages.SOMETHING_WENT_WRONG);
                 e.printStackTrace();
             }
         } else {
@@ -108,22 +110,16 @@ public class WeekForecastWindowController extends BaseController implements Init
     }
 
     private void getDataAboutWeather(ObservableList<CityWeatherForecast> cityWeatherForecast, String cityName) throws IOException {
-        for(int i =0 ; i<7 ; i++){
+        for(int i =0 ; i<DAYS_AMOUNT_TO_DISPLAY_WEATHER ; i++){
             CityWeatherForecast cityWeather = new CityWeatherForecast(cityName);
             cityWeather.getWeather(i);
             if(cityWeather.getJsonDataCorrect()){
                 cityWeatherForecast.add(cityWeather);
             }
             else{
-                errorLabel1.setText("Zle wpsiane miasto. (nie używaj polskich liter)");
+                errorLabel1.setText(Messages.WRONG_CITY);
             }
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
     }
 
     @FXML
@@ -138,5 +134,10 @@ public class WeekForecastWindowController extends BaseController implements Init
         viewFactory.showTomorrowWeatherWindow();
         Stage stage = (Stage) city1TextField.getScene().getWindow();
         viewFactory.closeStage(stage);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //empty
     }
 }
