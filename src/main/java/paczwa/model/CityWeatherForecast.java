@@ -17,8 +17,6 @@ import java.util.Date;
 
 public class CityWeatherForecast {
 
-    OWMConfig config;
-
     private String cityName;
     private String lat;
     private String lon;
@@ -41,7 +39,6 @@ public class CityWeatherForecast {
 
     public CityWeatherForecast(String cityName){
         this.cityName = cityName;
-        config = new OWMConfig();
     }
 
     public void setCityName(String cityName) {
@@ -61,7 +58,7 @@ public class CityWeatherForecast {
     }
 
     public void getWeather(int daysFromToday) throws IOException {
-        jsonWithDataAboutCity = JSONFileReader.readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+config.getApiKey()+"&lang=pl&units=metric");
+        jsonWithDataAboutCity = JSONFileReader.readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+this.cityName+"&appid="+OWMConfig.API_KEY+"&lang=pl&units=metric");
         if(isDataCorrect()){
             jsonDataCorrect = true;
             jsonWithCurrentMainWeatherData = jsonWithDataAboutCity.getJSONObject("main");
@@ -69,7 +66,7 @@ public class CityWeatherForecast {
             setLat();
             setLon();
 
-            JSONObject jsonWithWeatherData = JSONFileReader.readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+config.getApiKey()+"&lang=pl&units=metric");
+            JSONObject jsonWithWeatherData = JSONFileReader.readJsonFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat="+this.lat+"&lon="+this.lon+"& exclude=daily&appid="+OWMConfig.API_KEY+"&lang=pl&units=metric");
             jsonWithDailyWeatherData = jsonWithWeatherData.getJSONArray("daily");
             setWeather(daysFromToday);
         }
